@@ -1,6 +1,6 @@
 -- ===================================================================
--- CREATE BUTTON SCRIPT
--- Run this after creating a tab to add a button to it.
+-- CREATE BUTTON WITH ARROW SCRIPT
+-- Run this after creating a tab to add a button with your custom design.
 -- ===================================================================
 
 -- Find the window and the target tab created by the previous scripts
@@ -13,19 +13,15 @@ if not Window or not TargetTab then
     return
 end
 
--- Create a new button with the text "Click Me"
-local myButton = TargetTab:AddButton("Click Me")
+-- Create a new button by passing a table of options
+local myButtonWithArrow = TargetTab:AddButton({
+    Text = "Open Menu", -- The text for the button
+    Arrow = true        -- This tells the library to add the ">" arrow
+})
 
 -- Connect a function to the button's click event
-myButton.MouseButton1Click:Connect(function()
-    print("The button was clicked!")
-    
-    -- You can put any code you want to run here.
-    -- For example, you could make the player jump:
-    -- local player = game:GetService("Players").LocalPlayer
-    -- if player.Character and player.Character:FindFirstChild("Humanoid") then
-    --     player.Character.Humanoid.Jump = true
-    -- end
+myButtonWithArrow.MouseButton1Click:Connect(function()
+    print("The button with the arrow was clicked!")
 end)
 
-print("Button 'Click Me' was added to the target tab successfully.")
+print("Button 'Open Menu' with an arrow was added to the target tab successfully.")
