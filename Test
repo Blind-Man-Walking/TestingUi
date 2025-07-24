@@ -11,7 +11,7 @@ local BlindHubsUiLibrary = {}
 BlindHubsUiLibrary.__index = BlindHubsUiLibrary
 
 -- ====================================================================================
---[[                  SERVICE & THEME DEFINITIONS                 ]]
+--[[                             SERVICE & THEME DEFINITIONS                             ]]
 -- ====================================================================================
 
 -- Get services
@@ -41,7 +41,7 @@ local ROTATION_SPEED = 90
 local TOGGLE_KEY = Enum.KeyCode.RightShift
 
 -- ====================================================================================
---[[                  CORE UTILITY FUNCTIONS                  ]]
+--[[                             CORE UTILITY FUNCTIONS                             ]]
 -- ====================================================================================
 
 local function create(instanceType, properties)
@@ -88,7 +88,7 @@ end
 
 
 -- ====================================================================================
---[[                UI ELEMENT CREATION FUNCTIONS                 ]]
+--[[                             UI ELEMENT CREATION FUNCTIONS                             ]]
 -- ====================================================================================
 
 --- Creates a new descriptive label.
@@ -429,7 +429,7 @@ function BlindHubsUiLibrary:AddButton(options)
 end
 
 -- ====================================================================================
---[[                  TAB & THEME MANAGEMENT                  ]]
+--[[                             TAB & THEME MANAGEMENT                             ]]
 -- ====================================================================================
 
 function BlindHubsUiLibrary:AddTab(tabName)
@@ -590,7 +590,7 @@ function BlindHubsUiLibrary:ResetSettings()
 end
 
 -- ====================================================================================
---[[                BUILT-IN TAB CREATION FUNCTIONS               ]]
+--[[                             BUILT-IN TAB CREATION FUNCTIONS                             ]]
 -- ====================================================================================
 
 --- Creates the default "Main" tab with a welcome message.
@@ -742,7 +742,7 @@ end
 
 
 -- ====================================================================================
---[[                  WINDOW CREATION                   ]]
+--[[                             WINDOW CREATION                             ]]
 -- ====================================================================================
 
 function BlindHubsUiLibrary.CreateWindow(options)
@@ -1016,7 +1016,7 @@ function BlindHubsUiLibrary.CreateDefaultWindow()
 end
 
 -- ====================================================================================
---[[                  KEY SYSTEM                  ]]
+--[[                             KEY SYSTEM                             ]]
 -- ====================================================================================
 
 --- Creates the Key System UI and handles validation.
@@ -1311,7 +1311,7 @@ end
 
 
 -- ====================================================================================
---[[                  INITIALIZATION                  ]]
+--[[                             INITIALIZATION                             ]]
 -- ====================================================================================
 
 --- Initializes the entire UI, starting with the key system.
@@ -1323,5 +1323,8 @@ function BlindHubsUiLibrary.Init()
     BlindHubsUiLibrary.CreateKeySystem(LoadMainUI)
 end
 
--- To start the entire UI (Key System -> Main Window), just call this function.
-BlindHubsUiLibrary.Init()
+-- FIX: The library should NOT run itself. The loader script is responsible for this.
+-- BlindHubsUiLibrary.Init()
+
+-- FIX: The library MUST return its main table so the loader script can use it.
+return BlindHubsUiLibrary
