@@ -1,0 +1,30 @@
+-- ===================================================================
+-- CREATE TOGGLE SCRIPT
+-- Run this after creating a tab to add a toggle to it.
+-- ===================================================================
+
+-- Find the window and the target tab created by the previous scripts
+local Window = getgenv().Window
+local TargetTab = getgenv().TargetTab -- This assumes the "Create Tab" script stored the tab here
+
+-- Check if the necessary parts exist
+if not Window or not TargetTab then
+    warn("CreateToggle Error: Window or Target Tab not found. Please run the 'Create Window' and 'Create Tab' scripts first.")
+    return
+end
+
+-- Create a new toggle with the text "Enable Feature"
+local myToggle = TargetTab:AddToggle("Enable Feature")
+
+-- Connect a function to the toggle's state change event
+myToggle.State.Changed:Connect(function(isEnabled)
+    if isEnabled then
+        print("The feature has been turned ON.")
+        -- Put your code to run when the toggle is enabled here
+    else
+        print("The feature has been turned OFF.")
+        -- Put your code to run when the toggle is disabled here
+    end
+end)
+
+print("Toggle 'Enable Feature' was added to the target tab successfully.")
