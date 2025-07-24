@@ -1,0 +1,35 @@
+-- ===================================================================
+-- CREATE WINDOW SCRIPT (WITH DISCORD LINK IN TITLE)
+-- Run this script first to create the main UI window.
+-- ===================================================================
+
+-- The URL to your main UI library on GitHub
+local LIBRARY_URL = "https://raw.githubusercontent.com/Blind-Man-Walking/TestingUi/refs/heads/main/Test"
+
+-- Load the library
+local MyLibrary = loadstring(game:HttpGet(LIBRARY_URL))()
+
+-- Check if the library loaded correctly
+if not MyLibrary then
+    warn("CreateWindow Error: Could not load the main UI Library from GitHub.")
+    return
+end
+
+-- ==================== [ THE CHANGE IS HERE ] ====================
+-- 1. Define the parts of your title
+local hubName = "| BlindHub |"
+local discordLink = ": https://discord.gg/YourDiscord" -- Put your link here
+
+-- 2. Combine them into one string
+local fullTitle = hubName .. discordLink
+-- ================================================================
+
+-- 3. Use the combined string as the title
+local Window = MyLibrary.CreateWindow({ Title = fullTitle })
+Window:SetTheme("Purple") -- You can change the theme here
+
+-- IMPORTANT: This next line stores the window in a global place
+-- so that your other scripts (for adding tabs, etc.) can find it.
+getgenv().Window = Window
+
+print("BlindHub Window created successfully with the Discord link in the title.")
