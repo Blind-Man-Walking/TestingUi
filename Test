@@ -11,7 +11,7 @@ local BlindHubsUiLibrary = {}
 BlindHubsUiLibrary.__index = BlindHubsUiLibrary
 
 -- ====================================================================================
---[[                             SERVICE & THEME DEFINITIONS                             ]]
+--[[              SERVICE & THEME DEFINITIONS            ]]
 -- ====================================================================================
 
 -- Get services
@@ -41,7 +41,7 @@ local ROTATION_SPEED = 90
 local TOGGLE_KEY = Enum.KeyCode.RightShift
 
 -- ====================================================================================
---[[                             CORE UTILITY FUNCTIONS                             ]]
+--[[              CORE UTILITY FUNCTIONS             ]]
 -- ====================================================================================
 
 local function create(instanceType, properties)
@@ -54,41 +54,40 @@ end
 
 -- Notification System
 local function showNotification(parentGui, message, messageColor)
-	local notificationFrame = create("Frame", {
-		Size = UDim2.fromOffset(300, 50),
-		Position = UDim2.new(0.5, 0, -0.1, 0),
-		AnchorPoint = Vector2.new(0.5, 0),
-		BackgroundColor3 = Color3.fromRGB(35, 35, 35),
-		BackgroundTransparency = 0.2,
-		Parent = parentGui
-	})
-	create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = notificationFrame })
-	create("UIStroke", { Thickness = 2, Color = BORDER_COLOR, Parent = notificationFrame })
+    local notificationFrame = create("Frame", {
+        Size = UDim2.fromOffset(300, 50),
+        Position = UDim2.new(0.5, 0, -0.1, 0),
+        AnchorPoint = Vector2.new(0.5, 0),
+        BackgroundColor3 = Color3.fromRGB(35, 35, 35),
+        BackgroundTransparency = 0.2,
+        Parent = parentGui
+    })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = notificationFrame })
+    create("UIStroke", { Thickness = 2, Color = BORDER_COLOR, Parent = notificationFrame })
 
-	local notificationLabel = create("TextLabel", {
-		Size = UDim2.fromScale(1, 1),
-		BackgroundTransparency = 1,
-		Font = Enum.Font.SourceSansBold,
-		Text = message,
-		TextColor3 = messageColor,
-		TextSize = 16,
-		Parent = notificationFrame
-	})
-	
-	local tweenInfoShow = TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-	local tweenInfoHide = TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
-	
-	TweenService:Create(notificationFrame, tweenInfoShow, {Position = UDim2.new(0.5, 0, 0.05, 0)}):Play()
-	task.wait(2)
-	local hideTween = TweenService:Create(notificationFrame, tweenInfoHide, {Position = UDim2.new(0.5, 0, -0.1, 0)})
+    local notificationLabel = create("TextLabel", {
+        Size = UDim2.fromScale(1, 1),
+        BackgroundTransparency = 1,
+        Font = Enum.Font.SourceSansBold,
+        Text = message,
+        TextColor3 = messageColor,
+        TextSize = 16,
+        Parent = notificationFrame
+    })
+
+    local tweenInfoShow = TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+    local tweenInfoHide = TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
+
+    TweenService:Create(notificationFrame, tweenInfoShow, {Position = UDim2.new(0.5, 0, 0.05, 0)}):Play()
+    task.wait(2)
+    local hideTween = TweenService:Create(notificationFrame, tweenInfoHide, {Position = UDim2.new(0.5, 0, -0.1, 0)})
     hideTween:Play()
     hideTween.Completed:Wait()
-	notificationFrame:Destroy()
+    notificationFrame:Destroy()
 end
 
-
 -- ====================================================================================
---[[                             UI ELEMENT CREATION FUNCTIONS                             ]]
+--[[            UI ELEMENT CREATION FUNCTIONS            ]]
 -- ====================================================================================
 
 --- Creates a new descriptive label.
@@ -128,7 +127,7 @@ function BlindHubsUiLibrary:AddSlider(options)
     table.insert(self.window.animatedGradients, sliderGradient)
 
     local state = create("NumberValue", { Name = "State", Value = default, Parent = sliderFrame })
-    
+
     local valueLabel = create("TextLabel", {
         Name = "ValueLabel", Position = UDim2.fromOffset(5, 5), Size = UDim2.fromOffset(40, 20), BackgroundTransparency = 1,
         Font = Enum.Font.SourceSansBold, Text = tostring(default), TextColor3 = Color3.fromRGB(225, 225, 225), TextSize = 14,
@@ -180,7 +179,7 @@ function BlindHubsUiLibrary:AddSlider(options)
             end)
         end
     end)
-    
+
     state.Changed:Connect(function(newValue)
         valueLabel.Text = tostring(newValue)
         local percent = (newValue - min) / (max - min)
@@ -217,7 +216,7 @@ function BlindHubsUiLibrary:AddDropdown(options)
         Rotation = 0, Parent = frameStroke
     })
     table.insert(self.window.animatedGradients, frameGradient)
-    
+
     local dropdownLabel = create("TextLabel", {
         Name = "Label", Position = UDim2.fromOffset(15, 0), Size = UDim2.new(0.6, 0, 1, 0),
         BackgroundTransparency = 1, Font = Enum.Font.SourceSans, Text = text,
@@ -235,7 +234,7 @@ function BlindHubsUiLibrary:AddDropdown(options)
     create("UIPadding", {PaddingLeft = UDim.new(0, 8), Parent = dropdownButton})
 
     create("UICorner", { CornerRadius = UDim.new(0.5, 0), Parent = dropdownButton })
-    
+
     local buttonStroke = create("UIStroke", { Color = Color3.new(1, 1, 1), Thickness = 2, Parent = dropdownButton })
     local buttonGradient = create("UIGradient", {
         Color = ColorSequence.new({
@@ -259,7 +258,7 @@ function BlindHubsUiLibrary:AddDropdown(options)
     local optionsList = create("ScrollingFrame", {
         Name = "OptionsList", Size = UDim2.new(1, 0, 0, 100), Position = UDim2.new(0, 0, 1, 5),
         BackgroundColor3 = Color3.fromRGB(45, 45, 45), BorderSizePixel = 0, Visible = false,
-        Parent = dropdownButton, ZIndex = 3, ScrollBarThickness = 3
+        Parent = dropdownButton, ZIndex = 3, ScrollBarThickness = 5 -- Made scrollbar thicker
     })
     create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = optionsList })
     local listStroke = create("UIStroke", { Color = self.window.CurrentThemeColor, Thickness = 1.5, Parent = optionsList })
@@ -273,7 +272,7 @@ function BlindHubsUiLibrary:AddDropdown(options)
         arrow.Text = isOpen and "▲" or "▼"
         dropdownFrame.ZIndex = isOpen and 3 or 2
     end)
-    
+
     for _, itemText in ipairs(items) do
         local itemButton = create("TextButton", {
             Name = itemText, Size = UDim2.new(1, -4, 0, 25), BackgroundTransparency = 1, Font = Enum.Font.SourceSans,
@@ -292,10 +291,14 @@ function BlindHubsUiLibrary:AddDropdown(options)
         end)
     end
 
+    -- This section calculates the size of the dropdown list.
     local listLayout = optionsList:FindFirstChildOfClass("UIListLayout")
     if listLayout then
         local numItems = #items
-        optionsList.CanvasSize = UDim2.fromOffset(0, (numItems * 25) + ((numItems - 1) * listLayout.Padding.Offset))
+        -- First, calculate the total height of all options combined.
+        optionsList.CanvasSize = UDim2.fromOffset(0, (numItems * 27) + ((numItems - 1) * listLayout.Padding.Offset))
+        -- Then, set the visible frame's height to be the smaller of 125 or the total height.
+        -- If the total height is more than 125, a scrollbar will appear.
         local listHeight = math.min(125, optionsList.CanvasSize.Y.Offset)
         optionsList.Size = UDim2.new(1, 0, 0, listHeight)
     end
@@ -327,12 +330,12 @@ function BlindHubsUiLibrary:AddToggle(text)
         Rotation = 0, Parent = toggleStroke
     })
     table.insert(self.window.animatedGradients, toggleGradient)
-    
+
     local toggleLabel = create("TextLabel", { Name = "Label", Size = UDim2.new(1, -55, 1, 0), Position = UDim2.fromOffset(10, 0), BackgroundTransparency = 1, Font = Enum.Font.SourceSans, Text = text or "Toggle", TextColor3 = Color3.fromRGB(225, 225, 225), TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left, Parent = toggleFrame })
     local switchButton = create("TextButton", { Name = "Switch", Size = UDim2.fromOffset(40, 18), Position = UDim2.new(1, -10, 0.5, 0), AnchorPoint = Vector2.new(1, 0.5), BackgroundColor3 = Color3.fromRGB(80, 80, 80), Text = "", Parent = toggleFrame })
     create("UICorner", { CornerRadius = UDim.new(0.5, 0), Parent = switchButton })
     create("UIStroke", { Color = BORDER_COLOR, Thickness = 1.5, Parent = switchButton })
-    
+
     local switchKnob = create("Frame", { Name = "Knob", Size = UDim2.fromOffset(14, 14), Position = UDim2.fromOffset(2, 2), BackgroundColor3 = Color3.fromRGB(225, 225, 225), BorderSizePixel = 0, Parent = switchButton })
     create("UICorner", { CornerRadius = UDim.new(0.5, 0), Parent = switchKnob })
 
@@ -352,7 +355,7 @@ function BlindHubsUiLibrary:AddToggle(text)
 
     local state = create("BoolValue", { Name = "State", Value = false, Parent = toggleFrame })
     switchButton.MouseButton1Click:Connect(function() state.Value = not state.Value end)
-    
+
     state.Changed:Connect(function(newValue)
         local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
         local knobGoal, bgGoal = {}, {}
@@ -404,7 +407,7 @@ function BlindHubsUiLibrary:AddButton(options)
         Rotation = 0, Parent = buttonStroke
     })
     table.insert(self.window.animatedGradients, buttonGradient)
-    
+
     if icon or arrow then 
         button.TextXAlignment = Enum.TextXAlignment.Left
         if icon then
@@ -424,12 +427,12 @@ function BlindHubsUiLibrary:AddButton(options)
     else
         button.TextXAlignment = Enum.TextXAlignment.Center
     end
-    
+
     return button
 end
 
 -- ====================================================================================
---[[                             TAB & THEME MANAGEMENT                             ]]
+--[[              TAB & THEME MANAGEMENT             ]]
 -- ====================================================================================
 
 function BlindHubsUiLibrary:AddTab(tabName)
@@ -448,7 +451,7 @@ function BlindHubsUiLibrary:AddTab(tabName)
     local tabButton = create("TextButton", { Name = tabName, Text = tabName, Size = UDim2.fromOffset(94, 28), BackgroundColor3 = baseColor, Font = Enum.Font.SourceSans, TextColor3 = Color3.fromRGB(225, 225, 225), TextSize = 14, Parent = self.TabContainer })
     tabButton:SetAttribute("BaseColor", baseColor)
     table.insert(self.themeableBackgrounds, {Object = tabButton, BaseColor = baseColor})
-    
+
     create("UICorner", { CornerRadius = UDim.new(0.5, 0), Parent = tabButton })
     local tabStroke = create("UIStroke", { Color = Color3.new(1, 1, 1), Thickness = 2, ApplyStrokeMode = Enum.ApplyStrokeMode.Border, Parent = tabButton })
     local tabGradient = create("UIGradient", {
@@ -461,11 +464,31 @@ function BlindHubsUiLibrary:AddTab(tabName)
         Rotation = 0, Parent = tabStroke
     })
     table.insert(self.animatedGradients, tabGradient)
-    
+
     local contentPage = create("Frame", { Name = tabName .. "_Page", Size = UDim2.new(1, 0, 1, 0), BackgroundTransparency = 1, Parent = self.ContentContainer, Visible = true })
-    create("UIListLayout", { Parent = contentPage, Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder })
+    
+    -- We get a reference to the list layout to access its content size later
+    local listLayout = create("UIListLayout", { Parent = contentPage, Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder })
     local tabObject = { page = contentPage, window = self }
     setmetatable(tabObject, BlindHubsUiLibrary)
+
+    -- This function updates the scrollable area size for the content container.
+    local function updateCanvasSize()
+        -- Set the CanvasSize's Y dimension to the total height of the items in this tab's list.
+        self.ContentContainer.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y)
+    end
+
+    -- Listen for when the size of the content in the layout changes (e.g., an item is added).
+    listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateCanvasSize)
+
+    -- Also, listen for when this page becomes visible (when the tab is clicked).
+    -- This ensures the CanvasSize is updated correctly when switching between tabs.
+    contentPage:GetPropertyChangedSignal("Visible"):Connect(function()
+        if contentPage.Visible then
+            -- We call the function here to resize the canvas to fit the new tab's content.
+            task.defer(updateCanvasSize) -- Defer to ensure the size calculation is up-to-date.
+        end
+    end)
 
     self.activeTab = tabButton
     self.pages[tabButton] = tabObject.page
@@ -473,6 +496,9 @@ function BlindHubsUiLibrary:AddTab(tabName)
     for button, page in pairs(self.pages) do
         page.Visible = (button == tabButton)
     end
+
+    -- When a new tab is created, we need to immediately update the canvas size.
+    task.defer(updateCanvasSize)
 
     local currentThemeName = self:GetThemeName()
     if currentThemeName ~= "Black" then
@@ -513,14 +539,14 @@ end
 function BlindHubsUiLibrary:SetTheme(colorName)
     local themeColor = Themes[colorName]
     if not themeColor then return end
-    
+
     self.CurrentThemeName = colorName
-    
+
     local outlineColor = themeColor
     if colorName == "Black" then
         outlineColor = Themes["Purple"]
     end
-    
+
     self.CurrentThemeColor = outlineColor
 
     local newColorSequence = ColorSequence.new({
@@ -540,7 +566,7 @@ function BlindHubsUiLibrary:SetTheme(colorName)
         local elementInfo = self.staticThemeElements[i]
         if elementInfo and elementInfo.Object and elementInfo.Object.Parent then elementInfo.Object[elementInfo.Property] = outlineColor else table.remove(self.staticThemeElements, i) end
     end
-    
+
     for i = #self.themeableBackgrounds, 1, -1 do
         local elementInfo = self.themeableBackgrounds[i]
         if elementInfo and elementInfo.Object and elementInfo.Object.Parent then
@@ -562,7 +588,7 @@ end
 --- Function to update the UI's visual state
 function BlindHubsUiLibrary:UpdateVisuals()
     local tweenInfo = TweenInfo.new(0.3)
-    
+
     if self.isOpaque then
         TweenService:Create(self.MainFrame, tweenInfo, {BackgroundTransparency = 0}):Play()
     else
@@ -590,19 +616,27 @@ function BlindHubsUiLibrary:ResetSettings()
 end
 
 -- ====================================================================================
---[[                             BUILT-IN TAB CREATION FUNCTIONS                             ]]
+--[[            BUILT-IN TAB CREATION FUNCTIONS            ]]
 -- ====================================================================================
 
 --- Creates the default "Main" tab with a welcome message.
 function BlindHubsUiLibrary:CreateMainTab()
     local mainTab = self:AddTab("Main")
-    
+
     task.wait() 
     local player = Players.LocalPlayer
     local userId = player.UserId
     local thumbType = Enum.ThumbnailType.HeadShot
     local thumbSize = Enum.ThumbnailSize.Size420x420
     local content, isReady = Players:GetUserThumbnailAsync(userId, thumbType, thumbSize)
+
+    -- Detect the player's platform
+    local platform = "PC" -- Default to PC
+    if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
+        platform = "Mobile"
+    elseif UserInputService.GamepadEnabled and not UserInputService.KeyboardEnabled then
+        platform = "Console"
+    end
 
     create("UIPadding", {
         Parent = mainTab.page,
@@ -650,9 +684,9 @@ function BlindHubsUiLibrary:CreateMainTab()
     local infoText = create("TextLabel", {
         Name = "InfoText", Size = UDim2.new(1, 0, 1, 0), BackgroundTransparency = 1, Font = Enum.Font.SourceSans,
         Text = string.format([[<b>Username:</b> %s
-<b>Executor:</b> Delta
+<b>Platform:</b> %s
 <b>Player ID:</b> %d
-<b>Language:</b> English]], player.Name, player.UserId),
+<b>Language:</b> English]], player.Name, platform, player.UserId),
         TextColor3 = Color3.new(1,1,1), TextSize = 12, RichText = true,
         TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, Parent = infoContainer
     })
@@ -717,14 +751,9 @@ end
 function BlindHubsUiLibrary:CreateCheatsTab()
     local cheatsTab = self:AddTab("Cheats")
 
-    cheatsTab:AddLabel("Player Cheats")
+    cheatsTab:AddLabel("General Cheats")
     cheatsTab:AddToggle("Player ESP")
-    cheatsTab:AddButton({Text = "Kill Aura", Arrow = true})
-    cheatsTab:AddDropdown({
-        Text = "Target Priority",
-        Options = {"Closest", "Richest", "Random"}
-    })
-
+    
     cheatsTab:AddLabel("Movement Cheats")
     local walkspeedToggle = cheatsTab:AddToggle("Modify Walkspeed")
     local walkspeedSlider = cheatsTab:AddSlider({
@@ -742,7 +771,7 @@ end
 
 
 -- ====================================================================================
---[[                             WINDOW CREATION                             ]]
+--[[              WINDOW CREATION              ]]
 -- ====================================================================================
 
 function BlindHubsUiLibrary.CreateWindow(options)
@@ -752,7 +781,7 @@ function BlindHubsUiLibrary.CreateWindow(options)
     local position = options.Position or UDim2.new(0.5, -size.X.Offset / 2, 0.5, -size.Y.Offset / 2)
     local window = {}
     setmetatable(window, BlindHubsUiLibrary)
-    
+
     window.CurrentThemeName = "Purple"
     window.CurrentThemeColor = Themes.Purple
     window.pages, window.activeTab = {}, nil
@@ -764,7 +793,7 @@ function BlindHubsUiLibrary.CreateWindow(options)
     window.ScreenGui = create("ScreenGui", { Name = "BlindHubsUiLibrary_ScreenGui", ResetOnSpawn = false, ZIndexBehavior = Enum.ZIndexBehavior.Sibling, Enabled = true })
     window.MainFrame = create("Frame", { Name = "MainFrame", Size = size, Position = position, BackgroundColor3 = mainFrameBaseColor, BackgroundTransparency = window.defaultTransparency, BorderSizePixel = 0, Parent = window.ScreenGui, ClipsDescendants = true, Visible = true })
     table.insert(window.themeableBackgrounds, {Object = window.MainFrame, BaseColor = mainFrameBaseColor})
-    
+
     create("UICorner", { CornerRadius = UDim.new(0, 16), Parent = window.MainFrame })
     local mainStroke = create("UIStroke", { Color = Color3.new(1, 1, 1), Thickness = 6, ApplyStrokeMode = Enum.ApplyStrokeMode.Border, Parent = window.MainFrame })
     local outlineGradient = create("UIGradient", {
@@ -779,7 +808,7 @@ function BlindHubsUiLibrary.CreateWindow(options)
 
     local titleBar = create("Frame", { Name = "TitleBar", Size = UDim2.new(1, 0, 0, 35), BackgroundTransparency = 1, Parent = window.MainFrame })
     local titleLabel = create("TextLabel", { Name = "TitleLabel", Size = UDim2.new(1, -75, 1, 0), Position = UDim2.fromOffset(10, 0), BackgroundTransparency = 1, Font = Enum.Font.SourceSansBold, Text = title, TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, Parent = titleBar })
-    
+
     local hideButton = create("TextButton", { Name = "HideButton", Size = UDim2.fromOffset(20, 20), Position = UDim2.new(1, -60, 0.5, -10), BackgroundTransparency = 1, Text = "", Parent = titleBar })
     local line = create("Frame", { Name = "Line", Size = UDim2.new(0.7, 0, 0.1, 0), Position = UDim2.fromScale(0.5, 0.5), AnchorPoint = Vector2.new(0.5, 0.5), BackgroundColor3 = Color3.fromRGB(225, 225, 225), BorderSizePixel = 0, Parent = hideButton })
     create("UICorner", { CornerRadius = UDim.new(1, 0), Parent = line })
@@ -788,12 +817,27 @@ function BlindHubsUiLibrary.CreateWindow(options)
     create("UICorner", { CornerRadius = UDim.new(1, 0), Parent = line1 })
     local line2 = create("Frame", { Name = "Line2", Size = UDim2.new(0.7, 0, 0.1, 0), Position = UDim2.fromScale(0.5, 0.5), AnchorPoint = Vector2.new(0.5, 0.5), Rotation = -45, BackgroundColor3 = Color3.fromRGB(225, 225, 225), BorderSizePixel = 0, Parent = closeButton })
     create("UICorner", { CornerRadius = UDim.new(1, 0), Parent = line2 })
-    window.TabContainer = create("ScrollingFrame", { Name = "TabContainer", Size = UDim2.new(0, 110, 1, -40), Position = UDim2.fromOffset(5, 35), BackgroundTransparency = 1, BorderSizePixel = 0, CanvasSize = UDim2.new(0,0,0,0), ScrollBarThickness = 0, Parent = window.MainFrame })
-    create("UIListLayout", { Parent = window.TabContainer, Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder, HorizontalAlignment = Enum.HorizontalAlignment.Left })
+
+    window.TabContainer = create("ScrollingFrame", { 
+        Name = "TabContainer", Size = UDim2.new(0, 110, 1, -40), Position = UDim2.fromOffset(5, 35), 
+        BackgroundTransparency = 1, BorderSizePixel = 0, CanvasSize = UDim2.new(0,0,0,0), 
+        ScrollBarThickness = 5, Parent = window.MainFrame 
+    })
+    local tabListLayout = create("UIListLayout", { Parent = window.TabContainer, Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder, HorizontalAlignment = Enum.HorizontalAlignment.Left })
     create("UIPadding", { Parent = window.TabContainer, PaddingTop = UDim.new(0, 3), PaddingBottom = UDim.new(0, 3), PaddingLeft = UDim.new(0, 3), PaddingRight = UDim.new(0, 3) })
     
+    -- Automatically update the tab container's scrollable area whenever a tab is added or removed.
+    tabListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        window.TabContainer.CanvasSize = UDim2.fromOffset(0, tabListLayout.AbsoluteContentSize.Y)
+    end)
+
     local contentBaseColor = Color3.fromRGB(30, 30, 30)
-    window.ContentContainer = create("ScrollingFrame", { Name = "ContentContainer", Size = UDim2.new(1, -125, 1, -40), Position = UDim2.new(0, 115, 0, 35), BackgroundColor3 = contentBaseColor, BackgroundTransparency = 0.6, BorderSizePixel = 0, CanvasSize = UDim2.new(0, 0, 0, 0), ScrollBarImageColor3 = Color3.fromRGB(80, 80, 80), ScrollBarThickness = 3, Parent = window.MainFrame })
+    window.ContentContainer = create("ScrollingFrame", { 
+        Name = "ContentContainer", Size = UDim2.new(1, -125, 1, -40), Position = UDim2.new(0, 115, 0, 35), 
+        BackgroundColor3 = contentBaseColor, BackgroundTransparency = 0.6, BorderSizePixel = 0, 
+        CanvasSize = UDim2.new(0, 0, 0, 0), ScrollBarImageColor3 = Color3.fromRGB(80, 80, 80), 
+        ScrollBarThickness = 6, Parent = window.MainFrame 
+    })
     table.insert(window.themeableBackgrounds, {Object = window.ContentContainer, BaseColor = contentBaseColor})
 
     create("UICorner", { CornerRadius = UDim.new(0, 12), Parent = window.ContentContainer })
@@ -807,85 +851,48 @@ function BlindHubsUiLibrary.CreateWindow(options)
         Rotation = 0, Parent = contentStroke
     })
     table.insert(window.animatedGradients, contentGradient)
-    
-    -- ==================== [START] DUAL TOGGLE BUTTON OUTLINE ====================
-    -- This container is the invisible, draggable handle for the toggle button.
+
     local toggleButtonContainer = create("Frame", {
-        Name = "ToggleContainer",
-        Size = UDim2.fromOffset(40, 40), 
-        Position = UDim2.new(0, 20, 0.5, 0),
-        AnchorPoint = Vector2.new(0, 0.5),
-        BackgroundTransparency = 1,
-        Parent = window.ScreenGui
+        Name = "ToggleContainer", Size = UDim2.fromOffset(40, 40), Position = UDim2.new(0, 20, 0.5, 0),
+        AnchorPoint = Vector2.new(0, 0.5), BackgroundTransparency = 1, Parent = window.ScreenGui
     })
 
-    -- This background frame holds the OUTER outline.
     local outlineFrame = create("Frame", {
-        Name = "OutlineFrame",
-        Size = UDim2.fromScale(1, 1),
-        Position = UDim2.fromScale(0.5, 0.5),
-        AnchorPoint = Vector2.new(0.5, 0.5),
-        BackgroundTransparency = 1,
-        Parent = toggleButtonContainer
+        Name = "OutlineFrame", Size = UDim2.fromScale(1, 1), Position = UDim2.fromScale(0.5, 0.5),
+        AnchorPoint = Vector2.new(0.5, 0.5), BackgroundTransparency = 1, Parent = toggleButtonContainer
     })
     create("UICorner", {CornerRadius = UDim.new(0.5, 0), Parent = outlineFrame})
 
-    -- The animated OUTER outline.
-    local outerStroke = create("UIStroke", {
-        Color = Color3.new(1, 1, 1),
-        Thickness = 4, 
-        Parent = outlineFrame
-    })
+    local outerStroke = create("UIStroke", { Color = Color3.new(1, 1, 1), Thickness = 4, Parent = outlineFrame })
     local outerGradient = create("UIGradient", {
         Color = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, BORDER_COLOR),
-            ColorSequenceKeypoint.new(0.30, BORDER_COLOR),
-            ColorSequenceKeypoint.new(0.50, window.CurrentThemeColor),
-            ColorSequenceKeypoint.new(0.70, BORDER_COLOR),
+            ColorSequenceKeypoint.new(0.00, BORDER_COLOR), ColorSequenceKeypoint.new(0.30, BORDER_COLOR),
+            ColorSequenceKeypoint.new(0.50, window.CurrentThemeColor), ColorSequenceKeypoint.new(0.70, BORDER_COLOR),
             ColorSequenceKeypoint.new(1.00, BORDER_COLOR)
         }),
-        Rotation = 0,
-        Parent = outerStroke
+        Rotation = 0, Parent = outerStroke
     })
     table.insert(window.animatedGradients, outerGradient)
     
-    -- The actual button is placed inside the background frame.
     local toggleButton = create("TextButton", {
-        Name = "ToggleUI",
-        Size = UDim2.fromScale(1, 1), 
-        Position = UDim2.fromScale(0.5, 0.5),
-        AnchorPoint = Vector2.new(0.5, 0.5),
-        BackgroundColor3 = Color3.fromRGB(0,0,0),
-        Text = "<i>BH</i>", 
-        RichText = true, 
-        Font = Enum.Font.SourceSansBold,
-        TextColor3 = Color3.new(1,1,1),
-        TextSize = 17, 
-        Active = false, 
-        Parent = outlineFrame 
+        Name = "ToggleUI", Size = UDim2.fromScale(1, 1), Position = UDim2.fromScale(0.5, 0.5),
+        AnchorPoint = Vector2.new(0.5, 0.5), BackgroundColor3 = Color3.fromRGB(0,0,0), Text = "<i>BH</i>", 
+        RichText = true, Font = Enum.Font.SourceSansBold, TextColor3 = Color3.new(1,1,1),
+        TextSize = 17, Active = false, Parent = outlineFrame 
     })
     create("UICorner", {CornerRadius = UDim.new(0.5,0), Parent = toggleButton})
     
-    -- The INNER outline for the button itself.
-    local innerStroke = create("UIStroke", {
-        Color = Color3.new(1,1,1),
-        Thickness = 2.5, 
-        Parent = toggleButton
-    })
+    local innerStroke = create("UIStroke", { Color = Color3.new(1,1,1), Thickness = 2.5, Parent = toggleButton })
     local innerGradient = create("UIGradient", {
         Color = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, BORDER_COLOR),
-            ColorSequenceKeypoint.new(0.30, BORDER_COLOR),
-            ColorSequenceKeypoint.new(0.50, window.CurrentThemeColor),
-            ColorSequenceKeypoint.new(0.70, BORDER_COLOR),
+            ColorSequenceKeypoint.new(0.00, BORDER_COLOR), ColorSequenceKeypoint.new(0.30, BORDER_COLOR),
+            ColorSequenceKeypoint.new(0.50, window.CurrentThemeColor), ColorSequenceKeypoint.new(0.70, BORDER_COLOR),
             ColorSequenceKeypoint.new(1.00, BORDER_COLOR)
         }),
-        Rotation = 0,
-        Parent = innerStroke
+        Rotation = 0, Parent = innerStroke
     })
     table.insert(window.animatedGradients, innerGradient)
-    -- ===================== [END] DUAL TOGGLE BUTTON OUTLINE =====================
-    
+
     local connections, isConfirmationVisible = {}, false
     local function showConfirmation()
         if isConfirmationVisible then return end
@@ -904,10 +911,10 @@ function BlindHubsUiLibrary.CreateWindow(options)
         })
         table.insert(window.animatedGradients, confirmGradient)
         create("TextLabel", { Name = "ConfirmLabel", Size = UDim2.new(1, 0, 0, 50), BackgroundTransparency = 1, Text = "Are you sure?", Font = Enum.Font.SourceSansBold, TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 18, Parent = confirmDialog })
-        
+
         local yesButton = create("TextButton", { Name = "YesButton", Size = UDim2.fromOffset(100, 30), Position = UDim2.new(0.25, 0, 1, -40), AnchorPoint = Vector2.new(0.5, 0), BackgroundColor3 = Color3.fromRGB(190, 40, 40), Text = "Yes", Font = Enum.Font.SourceSans, TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 14, Parent = confirmDialog })
         create("UICorner", { CornerRadius = UDim.new(0.5, 0), Parent = yesButton }) 
-        
+
         local noButton = create("TextButton", { Name = "NoButton", Size = UDim2.fromOffset(100, 30), Position = UDim2.new(0.75, 0, 1, -40), AnchorPoint = Vector2.new(0.5, 0), BackgroundColor3 = Color3.fromRGB(80, 80, 80), Text = "No", Font = Enum.Font.SourceSans, TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 14, Parent = confirmDialog })
         create("UICorner", { CornerRadius = UDim.new(0.5, 0), Parent = noButton }) 
 
@@ -919,18 +926,17 @@ function BlindHubsUiLibrary.CreateWindow(options)
         end)
     end
     closeButton.MouseButton1Click:Connect(showConfirmation)
-    
+
     local function toggleVisibility() window.MainFrame.Visible = not window.MainFrame.Visible end
-    
+
     hideButton.MouseButton1Click:Connect(toggleVisibility)
-    
+
     titleBar.InputBegan:Connect(function(input, gpe)
         if gpe or isConfirmationVisible then return end
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             local dragStart = input.Position
             local startPosition = window.MainFrame.Position
-            local inputChangedConnection
-            local inputEndedConnection
+            local inputChangedConnection, inputEndedConnection
             inputChangedConnection = UserInputService.InputChanged:Connect(function(inputObject)
                 if inputObject.UserInputType == Enum.UserInputType.MouseMovement or inputObject.UserInputType == Enum.UserInputType.Touch then
                     local delta = inputObject.Position - dragStart
@@ -945,10 +951,9 @@ function BlindHubsUiLibrary.CreateWindow(options)
             end)
         end
     end)
-    
-    -- ROBUST DRAG & CLICK LOGIC FOR TOGGLE BUTTON
+
     local isDragging, dragStartMousePos, buttonStartPosUDim = false, nil, nil
-    local clickThreshold = 5 -- Pixels mouse can move before it's considered a drag
+    local clickThreshold = 5
 
     toggleButtonContainer.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -979,7 +984,7 @@ function BlindHubsUiLibrary.CreateWindow(options)
             end
         end
     end)
-    
+
     connections.Toggle = UserInputService.InputBegan:Connect(function(input, gpe)
         if not gpe and input.KeyCode == TOGGLE_KEY then toggleVisibility() end
     end)
@@ -990,10 +995,13 @@ function BlindHubsUiLibrary.CreateWindow(options)
             if gradient and gradient.Parent then gradient.Rotation = rotation else table.remove(window.animatedGradients, i) end
         end
     end)
-    window.ScreenGui.Destroying:Connect(function() for _, c in pairs(connections) do c:Disconnect() end end)
     
+    window.ScreenGui.Destroying:Connect(function() 
+        for _, c in pairs(connections) do c:Disconnect() end
+    end)
+
     window:SetTheme("Black")
-    
+
     local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
     window.ScreenGui.Parent = PlayerGui
     return window
@@ -1008,15 +1016,78 @@ function BlindHubsUiLibrary.CreateDefaultWindow()
         Title = uiName .. " " .. discordLink
     })
 
+    -- Existing Tabs
     Window:CreateMainTab()
     Window:CreateSettingsTab()
     Window:CreateCheatsTab()
+    
+    -- First set of added tabs
+    local playerTab = Window:AddTab("Player")
+    playerTab:AddLabel("Player Modifications")
+    playerTab:AddToggle("God Mode")
+    playerTab:AddSlider({ Text = "Jump Power", Min = 50, Max = 500, Default = 50 })
+    playerTab:AddToggle("Noclip")
+    playerTab:AddToggle("Infinite Jump")
+    playerTab:AddButton("Reset Character")
+    -- ==================== [NEW BUTTONS START] ====================
+    playerTab:AddLabel("More Player Options")
+    playerTab:AddButton("Heal Character")
+    playerTab:AddButton("Give Max Ammo")
+    playerTab:AddButton("Unlock All Skins")
+    playerTab:AddButton("Reset Stats")
+    playerTab:AddButton({Text = "Set Walk Animation", Arrow = true})
+    playerTab:AddButton({Text = "Set Jump Animation", Arrow = true})
+    playerTab:AddToggle("Invisible")
+    playerTab:AddToggle("Fly")
+    -- ===================== [NEW BUTTONS END] =====================
+
+    local worldTab = Window:AddTab("World")
+    worldTab:AddLabel("Environment Options")
+    worldTab:AddSlider({ Text = "Time of Day", Min = 0, Max = 24, Default = 14 })
+    worldTab:AddToggle("Remove Fog")
+    worldTab:AddToggle("Full Bright")
+    worldTab:AddButton({Text = "Teleport to Spawn", Arrow = true})
+
+    local miscTab = Window:AddTab("Misc")
+    miscTab:AddLabel("Utility Functions")
+    miscTab:AddButton("Rejoin Server")
+    miscTab:AddButton("Server Hop")
+    miscTab:AddDropdown({ 
+        Text = "Long List Example", 
+        Options = {
+            "Option 1", "Option 2", "Option 3", "Option 4", "Option 5",
+            "Option 6", "Option 7", "Option 8", "Option 9", "Option 10",
+            "Option 11", "Option 12"
+        } 
+    })
+    miscTab:AddButton("Print Mouse Position")
+
+    -- Second set of added tabs
+    local renderTab = Window:AddTab("Render")
+    renderTab:AddLabel("Visual Enhancements")
+    renderTab:AddToggle("Tracers")
+    renderTab:AddToggle("Chams")
+    renderTab:AddDropdown({ Text = "ESP Box Style", Options = {"2D Box", "3D Box", "Corner Box"} })
+    renderTab:AddSlider({ Text = "Field of View", Min = 70, Max = 120, Default = 70 })
+    
+    local combatTab = Window:AddTab("Combat")
+    combatTab:AddLabel("Combat Settings")
+    combatTab:AddButton({Text = "Kill Aura", Arrow = true})
+    combatTab:AddDropdown({ Text = "Target Priority", Options = {"Closest", "Lowest HP", "Richest"} })
+    combatTab:AddToggle("Aimbot")
+    combatTab:AddSlider({ Text = "Aimbot FOV", Min = 10, Max = 200, Default = 50 })
+
+    local farmingTab = Window:AddTab("Farming")
+    farmingTab:AddLabel("Automation")
+    farmingTab:AddToggle("Auto Farm Mobs")
+    farmingTab:AddToggle("Auto Collect Drops")
+    farmingTab:AddButton("Select Farm Location")
 
     return Window
 end
 
 -- ====================================================================================
---[[                             KEY SYSTEM                             ]]
+--[[              KEY SYSTEM               ]]
 -- ====================================================================================
 
 --- Creates the Key System UI and handles validation.
@@ -1026,9 +1097,9 @@ function BlindHubsUiLibrary.CreateKeySystem(onSuccess)
         Linkvertise = "https://your.linkvertise.link/here",
         Luarmor = "https://your.luarmor.link/here"
     }
-    
+
     local animatedGradients = {}
-    
+
     local keySystemGui = create("ScreenGui", {
         Name = "BlindHubsKeySystem",
         ResetOnSpawn = false,
@@ -1046,7 +1117,7 @@ function BlindHubsUiLibrary.CreateKeySystem(onSuccess)
         Parent = keySystemGui
     })
     create("UICorner", {CornerRadius = UDim.new(0, 16), Parent = mainFrame})
-    
+
     local mainStroke = create("UIStroke", { Thickness = 6, Parent = mainFrame })
     local mainGradient = create("UIGradient", {
         Color = ColorSequence.new({
@@ -1057,7 +1128,7 @@ function BlindHubsUiLibrary.CreateKeySystem(onSuccess)
         Rotation = 0, Parent = mainStroke
     })
     table.insert(animatedGradients, mainGradient)
-    
+
     local title = create("TextLabel", {
         Name = "Title",
         Size = UDim2.new(1, 0, 0, 30),
@@ -1071,87 +1142,48 @@ function BlindHubsUiLibrary.CreateKeySystem(onSuccess)
         Parent = mainFrame
     })
 
-    -- [ADDED] Close button for key system
     local closeButton = create("TextButton", {
-        Name = "CloseButton",
-        Size = UDim2.fromOffset(20, 20),
-        Position = UDim2.new(1, -15, 0, 25),
-        AnchorPoint = Vector2.new(1, 0.5),
-        BackgroundTransparency = 1,
-        Text = "",
-        Parent = mainFrame,
-        ZIndex = 2
+        Name = "CloseButton", Size = UDim2.fromOffset(20, 20),
+        Position = UDim2.new(1, -15, 0, 25), AnchorPoint = Vector2.new(1, 0.5),
+        BackgroundTransparency = 1, Text = "", Parent = mainFrame, ZIndex = 2
     })
     local line1 = create("Frame", {
-        Name = "Line1",
-        Size = UDim2.new(0.7, 0, 0.1, 0),
-        Position = UDim2.fromScale(0.5, 0.5),
-        AnchorPoint = Vector2.new(0.5, 0.5),
-        Rotation = 45,
-        BackgroundColor3 = Color3.fromRGB(225, 225, 225),
-        Parent = closeButton
+        Name = "Line1", Size = UDim2.new(0.7, 0, 0.1, 0), Position = UDim2.fromScale(0.5, 0.5),
+        AnchorPoint = Vector2.new(0.5, 0.5), Rotation = 45,
+        BackgroundColor3 = Color3.fromRGB(225, 225, 225), Parent = closeButton
     })
     create("UICorner", { CornerRadius = UDim.new(1, 0), Parent = line1 })
     local line2 = create("Frame", {
-        Name = "Line2",
-        Size = UDim2.new(0.7, 0, 0.1, 0),
-        Position = UDim2.fromScale(0.5, 0.5),
-        AnchorPoint = Vector2.new(0.5, 0.5),
-        Rotation = -45,
-        BackgroundColor3 = Color3.fromRGB(225, 225, 225),
-        Parent = closeButton
+        Name = "Line2", Size = UDim2.new(0.7, 0, 0.1, 0), Position = UDim2.fromScale(0.5, 0.5),
+        AnchorPoint = Vector2.new(0.5, 0.5), Rotation = -45,
+        BackgroundColor3 = Color3.fromRGB(225, 225, 225), Parent = closeButton
     })
     create("UICorner", { CornerRadius = UDim.new(1, 0), Parent = line2 })
 
-    closeButton.MouseButton1Click:Connect(function()
-        keySystemGui:Destroy()
-    end)
+    closeButton.MouseButton1Click:Connect(function() keySystemGui:Destroy() end)
     
     local keyTextBox = create("TextBox", {
-        Name = "KeyInput",
-        Size = UDim2.new(1, -20, 0, 35),
-        Position = UDim2.new(0.5, 0, 0.4, 0),
-        AnchorPoint = Vector2.new(0.5, 0.5),
-        BackgroundColor3 = Color3.fromRGB(45, 45, 45),
-        Font = Enum.Font.SourceSans,
-        Text = "",
-        PlaceholderText = "Enter Key...",
-        PlaceholderColor3 = Color3.fromRGB(150, 150, 150),
-        TextColor3 = Color3.fromRGB(225, 225, 225),
-        TextSize = 14,
-        ClearTextOnFocus = false,
-        Parent = mainFrame
+        Name = "KeyInput", Size = UDim2.new(1, -20, 0, 35), Position = UDim2.new(0.5, 0, 0.4, 0),
+        AnchorPoint = Vector2.new(0.5, 0.5), BackgroundColor3 = Color3.fromRGB(45, 45, 45),
+        Font = Enum.Font.SourceSans, Text = "", PlaceholderText = "Enter Key...",
+        PlaceholderColor3 = Color3.fromRGB(150, 150, 150), TextColor3 = Color3.fromRGB(225, 225, 225),
+        TextSize = 14, ClearTextOnFocus = false, Parent = mainFrame
     })
     create("UICorner", {CornerRadius = UDim.new(0.5, 0), Parent = keyTextBox})
 
-    -- Button Container
     local buttonContainer = create("Frame", {
-        Name = "ButtonContainer",
-        Size = UDim2.new(1, -20, 0, 35),
-        Position = UDim2.new(0.5, 0, 0.65, 0),
-        AnchorPoint = Vector2.new(0.5, 0.5),
-        BackgroundTransparency = 1,
-        Parent = mainFrame
+        Name = "ButtonContainer", Size = UDim2.new(1, -20, 0, 35), Position = UDim2.new(0.5, 0, 0.65, 0),
+        AnchorPoint = Vector2.new(0.5, 0.5), BackgroundTransparency = 1, Parent = mainFrame
     })
     create("UIListLayout", {
-        FillDirection = Enum.FillDirection.Horizontal,
-        HorizontalAlignment = Enum.HorizontalAlignment.Center,
-        SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 10),
-        Parent = buttonContainer
+        FillDirection = Enum.FillDirection.Horizontal, HorizontalAlignment = Enum.HorizontalAlignment.Center,
+        SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 10), Parent = buttonContainer
     })
 
-    -- Get Key Dropdown
     local getKeyButton = create("TextButton", {
-        Name = "GetKeyButton",
-        Size = UDim2.new(0.5, -5, 1, 0),
-        BackgroundColor3 = Color3.fromRGB(65, 65, 65),
-        Font = Enum.Font.SourceSansBold,
-        Text = "Get Key",
-        TextColor3 = Color3.fromRGB(225, 225, 225),
-        TextSize = 16,
-        Parent = buttonContainer,
-        ZIndex = 2
+        Name = "GetKeyButton", Size = UDim2.new(0.5, -5, 1, 0), BackgroundColor3 = Color3.fromRGB(65, 65, 65),
+        Font = Enum.Font.SourceSansBold, Text = "Get Key", TextColor3 = Color3.fromRGB(225, 225, 225),
+        TextSize = 16, Parent = buttonContainer, ZIndex = 2
     })
     create("UICorner", {CornerRadius = UDim.new(0.5, 0), Parent = getKeyButton})
     local getKeyStroke = create("UIStroke", { Thickness = 2, Parent = getKeyButton })
@@ -1166,14 +1198,9 @@ function BlindHubsUiLibrary.CreateKeySystem(onSuccess)
     table.insert(animatedGradients, getKeyGradient)
 
     local keyOptions = create("Frame", {
-        Name = "KeyOptions",
-        Size = UDim2.new(1, 0, 0, 60),
-        Position = UDim2.new(0, 0, 0, -5),         
-        AnchorPoint = Vector2.new(0, 1),           
-        BackgroundColor3 = Color3.fromRGB(45, 45, 45),
-        Visible = false,
-        ZIndex = 3, 
-        Parent = getKeyButton
+        Name = "KeyOptions", Size = UDim2.new(1, 0, 0, 60), Position = UDim2.new(0, 0, 0, -5),         
+        AnchorPoint = Vector2.new(0, 1), BackgroundColor3 = Color3.fromRGB(45, 45, 45),
+        Visible = false, ZIndex = 3, Parent = getKeyButton
     })
     create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = keyOptions})
     create("UIListLayout", {Padding = UDim.new(0, 2), Parent = keyOptions})
@@ -1202,20 +1229,12 @@ function BlindHubsUiLibrary.CreateKeySystem(onSuccess)
         keyOptions.Visible = false
     end)
 
-    getKeyButton.MouseButton1Click:Connect(function()
-        keyOptions.Visible = not keyOptions.Visible
-    end)
+    getKeyButton.MouseButton1Click:Connect(function() keyOptions.Visible = not keyOptions.Visible end)
 
-    -- Check Key Button
     local checkKeyButton = create("TextButton", {
-        Name = "CheckKeyButton",
-        Size = UDim2.new(0.5, -5, 1, 0),
-        BackgroundColor3 = Color3.fromRGB(65, 65, 65),
-        Font = Enum.Font.SourceSansBold,
-        Text = "Check Key",
-        TextColor3 = Color3.fromRGB(225, 225, 225),
-        TextSize = 16,
-        Parent = buttonContainer
+        Name = "CheckKeyButton", Size = UDim2.new(0.5, -5, 1, 0), BackgroundColor3 = Color3.fromRGB(65, 65, 65),
+        Font = Enum.Font.SourceSansBold, Text = "Check Key", TextColor3 = Color3.fromRGB(225, 225, 225),
+        TextSize = 16, Parent = buttonContainer
     })
     create("UICorner", {CornerRadius = UDim.new(0.5, 0), Parent = checkKeyButton})
     local checkKeyStroke = create("UIStroke", { Thickness = 2, Parent = checkKeyButton })
@@ -1229,18 +1248,11 @@ function BlindHubsUiLibrary.CreateKeySystem(onSuccess)
     })
     table.insert(animatedGradients, checkKeyGradient)
 
-    -- Join Discord Button
     local discordButton = create("TextButton", {
-        Name = "JoinDiscordButton",
-        Size = UDim2.new(1, -20, 0, 35),
-        Position = UDim2.new(0.5, 0, 1, -28),
-        AnchorPoint = Vector2.new(0.5, 0.5),
-        BackgroundColor3 = Color3.fromRGB(88, 101, 242),
-        Font = Enum.Font.SourceSansBold,
-        Text = "Join Discord",
-        TextColor3 = Color3.fromRGB(255, 255, 255),
-        TextSize = 16,
-        Parent = mainFrame
+        Name = "JoinDiscordButton", Size = UDim2.new(1, -20, 0, 35), Position = UDim2.new(0.5, 0, 1, -28),
+        AnchorPoint = Vector2.new(0.5, 0.5), BackgroundColor3 = Color3.fromRGB(88, 101, 242),
+        Font = Enum.Font.SourceSansBold, Text = "Join Discord", TextColor3 = Color3.fromRGB(255, 255, 255),
+        TextSize = 16, Parent = mainFrame
     })
     create("UICorner", {CornerRadius = UDim.new(0.5, 0), Parent = discordButton})
     local discordStroke = create("UIStroke", { Thickness = 2, Parent = discordButton })
@@ -1271,9 +1283,7 @@ function BlindHubsUiLibrary.CreateKeySystem(onSuccess)
             showNotification(keySystemGui, "Success! Loading UI...", Color3.fromRGB(80, 255, 80))
             task.wait(1.5)
             keySystemGui:Destroy()
-            if onSuccess then
-                onSuccess()
-            end
+            if onSuccess then onSuccess() end
         else
             title.Text = "Invalid ❌"
             showNotification(keySystemGui, "Incorrect Key!", Color3.fromRGB(255, 80, 80))
@@ -1311,7 +1321,7 @@ end
 
 
 -- ====================================================================================
---[[                             INITIALIZATION                             ]]
+--[[              INITIALIZATION               ]]
 -- ====================================================================================
 
 --- Initializes the entire UI, starting with the key system.
@@ -1323,8 +1333,5 @@ function BlindHubsUiLibrary.Init()
     BlindHubsUiLibrary.CreateKeySystem(LoadMainUI)
 end
 
--- FIX: The library should NOT run itself. The loader script is responsible for this.
--- BlindHubsUiLibrary.Init()
-
--- FIX: The library MUST return its main table so the loader script can use it.
-return BlindHubsUiLibrary
+-- To start the entire UI (Key System -> Main Window), just call this function.
+BlindHubsUiLibrary.Init()
