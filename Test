@@ -1335,3 +1335,5 @@ end
 
 -- To start the entire UI (Key System -> Main Window), just call this function.
 BlindHubsUiLibrary.Init()
+
+return BlindHubsUiLibrary
